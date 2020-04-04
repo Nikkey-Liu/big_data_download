@@ -1,14 +1,27 @@
 #!/bin/python
+
 import os
 from bs4 import BeautifulSoup
 import lxml
 import numpy as np
 import pandas as pd
 
+def extract_week(input=''):
+    # extract weeks into an array
+    output = []
+    splitted_by_comma = input.split(',')
+    for value in splitted_by_comma:
+        if '-' in value:
+            splitted_by_dash = value.split('-')
+            for val in range(int(splitted_by_dash[0]), int(splitted_by_dash[1])+1):
+                output.append(val)
+        else:
+            output.append(int(value))
+
+    return output
 
 def add_entry(array=[], output={}):
-    # updates the ouput module deatils dict
-    # with new details from array
+    # updates the ouput dict with the array
     module_type = str(array[3]).split(' - ')
     module_time = array[2].split(' - ')
 
@@ -28,7 +41,7 @@ def add_entry(array=[], output={}):
     output['module_end_time'].append(module_time[1])
     output['lecturer'].append(array[4])
     output['lec_room'].append(array[5])
-    output['week'].append(array[6])
+    output['week'].append(extract_week(array[6]))
     output['day_of_the_week'].append(array[7])
 
 def get_module_details(file=''):
@@ -52,6 +65,7 @@ def get_module_details(file=''):
                     day = days_of_the_week[index]
                     contents = td.contents[0].contents
                     contents = list(filter((' ').__ne__, contents))
+                    # convert the br tag object to str then remove it
                     for index, val in enumerate(contents):
                         if type(val) != str:
                             contents[index] = str(val)
@@ -81,7 +95,9 @@ if __name__ == '__main__':
                 filename = f'data/LM{course_id}{year}.html'
             csv = f'output/{filename[5:-5]}.csv'
 
-            omit = ['0281', '0291', '0381', '0391', '0401', '0924']
+            omit = ['0281', '0291', '0381', '0391', '0401', '0924',
+             '0444', '0501', '0522', '0532', '0541', '0552', '0561',
+             '0714', '0734', '0774', '0891', '0901', '0923', '0963']
             if filename[7:-5] in omit:
                 break
 
