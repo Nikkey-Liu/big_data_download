@@ -2,9 +2,10 @@
 
 YEARS=(1 2 3 4 [5]=5)
 
-for ID in {1..999}; do
+for ID in {1..1001}; do
 if [ $ID -lt 10 ]; then
 COURSE="LM00${ID}"
+
 elif [ $ID -lt 100 ]; then
 COURSE="LM0${ID}"
 elif [$ID -gt 99]; then
@@ -13,7 +14,7 @@ fi
 
 for YEAR in ${YEARS[*]}; do
 
-FILENAME="$COURSE_$YEAR.html"
+FILENAME="$COURSE$YEAR.html"
 
 if [ "" != "$( find . -name ${FILENAME} )" ]; then
 echo 'File exist!'
