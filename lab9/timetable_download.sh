@@ -31,7 +31,7 @@ touch "$FILENAME"
 echo "$RESPONSE" >> "$COURSE$YEAR.html"
 echo "Completed!"
 
-done
-done
+
+done; done
 
 $( find . -size 170c -delete )
