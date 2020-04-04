@@ -3,11 +3,11 @@
 YEARS=(1 2 3 4 [5]=5)
 
 for ID in {1..999}; do
-if [ [$ID -lt 10] ]; then
+if [ $ID -lt 10 ]; then
 COURSE="LM00${ID}"
-elif [ [$ID -lt 100 ]]; then
+elif [ $ID -lt 100 ]; then
 COURSE="LM0${ID}"
-elif [[$ID -ge 100]]; then
+elif [$ID -gt 99]; then
 COURSE="LM${ID}"
 fi
 
